@@ -1,40 +1,51 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 
 namespace ShifterEngine {
 
-	public class Shift : IComparable {
+	[Serializable()]
+	public class Shift : IComparable, ISerializable {
 
 		#region Properties
 
 		/// <summary>
 		/// The beginning time of this Shift.
 		/// </summary>
-		internal DateTime Start { get; private set; }
+		public DateTime Start { get; private set; }
 
 		/// <summary>
 		/// The finishing time of this Shift.
 		/// </summary>
-		internal DateTime End { get; private set; }
+		public DateTime End { get; private set; }
 
 		/// <summary>
 		/// The duration of this Shift.
 		/// </summary>
-		internal TimeSpan Duration { get { return this.End - this.Start; } }
+		public TimeSpan Duration { get { return this.End - this.Start; } set { } }
 
 		/// <summary>
 		/// The amount of hours passed during this Shift.
 		/// </summary>
-		internal double Hours { get { return this.Duration.TotalHours; } }
+		public double Hours { get { return this.Duration.TotalHours; } set { } }
 
 		/// <summary>
 		/// The amount of minutes passed during this Shift.
 		/// </summary>
-		internal double Minutes { get { return this.Duration.TotalMinutes; } }
+		public double Minutes { get { return this.Duration.TotalMinutes; } set { } }
 
 		#endregion
 
 		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ShifterEngine.Shift"/> class.
+		/// A default Shift is a shift that starts Now, and lasts 1 hour.
+		/// </summary>
+		public Shift() {
+			this.Start = DateTime.Now;
+			this.End = this.Start.AddHours(1);
+		}
 
 		/// <summary>
 		/// Creates a new Shift instance according to the given Start and End times.
@@ -60,6 +71,26 @@ namespace ShifterEngine {
 		/// <param name="duration"></param>
 		/// <param name="end"></param>
 		public Shift(TimeSpan duration, DateTime end) : this(end - duration, end) {
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ShifterEngine.Shift"/> class.
+		/// </summary>
+		/// <param name="info">Info.</param>
+		/// <param name="context">Context.</param>
+		public Shift(SerializationInfo info, StreamingContext context) : this(info.GetDateTime("start"), info.GetDateTime("end")) {
+		}
+
+		#endregion
+
+		#region ISerializable implementation
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context) {
+			info.AddValue("start", this.Start);
+			info.AddValue("end", this.End);
+			info.AddValue("duration", this.Duration.ToString());
+			info.AddValue("hours", this.Hours);
+			info.AddValue("minutes", this.Minutes);
 		}
 
 		#endregion
