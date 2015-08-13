@@ -4,8 +4,12 @@ using System.Runtime.Serialization;
 
 namespace ShifterEngine {
 
+	/// <summary>
+	/// This class represents a normal Shift consisting of starting and ending times.
+	/// The class offers some simple but commonly used data about the shift.
+	/// </summary>
 	[Serializable()]
-	public class Shift : IComparable, ISerializable {
+	public class Shift : IComparable, ISerializable, ICloneable {
 
 		#region Properties
 
@@ -18,6 +22,12 @@ namespace ShifterEngine {
 		/// The finishing time of this Shift.
 		/// </summary>
 		public DateTime End { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the time off.
+		/// </summary>
+		/// <value>The time off.</value>
+		public Shift TimeOff { get; set; }
 
 		/// <summary>
 		/// The duration of this Shift.
@@ -42,9 +52,7 @@ namespace ShifterEngine {
 		/// Initializes a new instance of the <see cref="ShifterEngine.Shift"/> class.
 		/// A default Shift is a shift that starts Now, and lasts 1 hour.
 		/// </summary>
-		public Shift() {
-			this.Start = DateTime.Now;
-			this.End = this.Start.AddHours(1);
+		public Shift() : this(DateTime.Now, DateTime.Now.AddHours(1)) {
 		}
 
 		/// <summary>
@@ -80,6 +88,17 @@ namespace ShifterEngine {
 		/// <param name="context">Context.</param>
 		public Shift(SerializationInfo info, StreamingContext context) : this(info.GetDateTime("start"), info.GetDateTime("end")) {
 		}
+			
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ShifterEngine.Shift"/> class.
+		/// With predefined time off.
+		/// </summary>
+		/// <param name="start">Start.</param>
+		/// <param name="end">End.</param>
+		/// <param name="timeOff">Time off.</param>
+		public Shift(DateTime start, DateTime end, Shift timeOff) : this(start, end) {
+			this.TimeOff = (Shift) timeOff.Clone();
+		}
 
 		#endregion
 
@@ -91,35 +110,6 @@ namespace ShifterEngine {
 			info.AddValue("duration", this.Duration.ToString());
 			info.AddValue("hours", this.Hours);
 			info.AddValue("minutes", this.Minutes);
-		}
-
-		#endregion
-
-		#region Overrides
-
-		/// <summary>
-		/// Creates a textual representation of this Shift.
-		/// </summary>
-		/// <returns>A string representation of the Shift's details.</returns>
-		public override string ToString() {
-			return string.Format("Took place at:\t{0}\nUntil:\t{1}\nDuration:\t{2}\n", this.Start, this.End, this.Duration);
-		}
-
-		/// <summary>
-		/// Two Shifts are equal iff Start and End times are equal.
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns>True if the given Shift equals this Shift, false otherwise.</returns>
-		public override bool Equals(object obj) {
-			return this.CompareTo(obj) == 0;
-		}
-
-		/// <summary>
-		/// Default GetHashCode inherited from Object class.
-		/// </summary>
-		/// <returns></returns>
-		public override int GetHashCode() {
-			return base.GetHashCode();
 		}
 
 		#endregion
@@ -151,5 +141,58 @@ namespace ShifterEngine {
 		}
 
 		#endregion
+
+		#region ICloneable implementation
+
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public object Clone() {
+			return new Shift(this.Start, this.End, this.TimeOff);
+		}
+
+		#endregion
+
+		#region Overrides implementation
+
+		/// <summary>
+		/// Creates a textual representation of this Shift.
+		/// </summary>
+		/// <returns>A string representation of the Shift's details.</returns>
+		public override string ToString() {
+			return string.Format("Took place at:\t{0}\nUntil:\t{1}\nDuration:\t{2}\n", this.Start, this.End, this.Duration);
+		}
+
+		/// <summary>
+		/// Two Shifts are equal iff Start and End times are equal.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns>True if the given Shift equals this Shift, false otherwise.</returns>
+		public override bool Equals(object obj) {
+			return this.CompareTo(obj) == 0;
+		}
+
+		/// <summary>
+		/// Default GetHashCode inherited from Object class.
+		/// </summary>
+		/// <returns></returns>
+		public override int GetHashCode() {
+			return base.GetHashCode();
+		}
+
+		#endregion
+
+		#region Public methods
+
+		/// <summary>
+		/// Adds the time off.
+		/// </summary>
+		/// <param name="timeOff">Time off.</param>
+		public void AddTimeOff(Shift timeOff) {
+			this.TimeOff = timeOff;
+		}
+
+		#endregion
+
 	}
 }
