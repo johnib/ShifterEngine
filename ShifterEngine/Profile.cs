@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using money;
 using NameParsing;
@@ -10,6 +10,13 @@ namespace ShifterEngine {
 
 	[Serializable]
 	public class Profile : IComparable {
+
+		#region Messages
+
+		const string InvalidDay = "Month's end day must be between 1 and 28.";
+		const string InvalidPercentage = "Overtime percentage cannot be lower than 100.";
+
+		#endregion
 
 		#region Properties
 
@@ -81,11 +88,11 @@ namespace ShifterEngine {
 		               double overtime2) {
 
 			if (monthEndDay < 1 || monthEndDay > 28) {
-				throw new ArgumentOutOfRangeException("Month's end day must be between 1 and 28.");
+				throw new ArgumentOutOfRangeException(InvalidDay);
 			}
 
 			if (overtime1 < 100 || overtime2 < 100) {
-				throw new ArgumentOutOfRangeException("Overtime percentage cannot be lower than 100.");
+				throw new ArgumentOutOfRangeException(InvalidPercentage);
 			}
 			
 			this.FullName = fullName.ParseName();

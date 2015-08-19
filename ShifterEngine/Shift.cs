@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
 
@@ -108,9 +108,9 @@ namespace ShifterEngine {
 			info.AddValue("start", this.Start);
 			info.AddValue("end", this.End);
 
-			// TODO: find out why this property isn't serialized (empty value).
-
+			// TODO: fix serializing this.Duration (it's an empty string in the XML)
 			info.AddValue("duration", this.Duration.ToString());
+
 			info.AddValue("hours", this.Hours);
 			info.AddValue("minutes", this.Minutes);
 		}
