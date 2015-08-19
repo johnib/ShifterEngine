@@ -8,6 +8,11 @@ using System.Text;
 
 namespace ShifterEngine {
 
+	/// <summary>
+	/// This class represents a user Profile.
+	/// The class consists of the user relevant data, such as hour wage, inorder
+	/// to calculate and estimate future incomes and so on.
+	/// </summary>
 	[Serializable]
 	public class Profile : IComparable {
 
