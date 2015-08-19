@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShifterEngine", "ShifterEngine\ShifterEngine.csproj", "{D888A327-95D1-4197-8F0C-FBCFE949BBE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3127FC61-8F21-499E-83E4-A0AFB7B3F88D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3127FC61-8F21-499E-83E4-A0AFB7B3F88D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3127FC61-8F21-499E-83E4-A0AFB7B3F88D}.Debug|x86.Build.0 = Debug|Any CPU
+		{3127FC61-8F21-499E-83E4-A0AFB7B3F88D}.Release|x86.ActiveCfg = Release|Any CPU
+		{3127FC61-8F21-499E-83E4-A0AFB7B3F88D}.Release|x86.Build.0 = Release|Any CPU
+		{D888A327-95D1-4197-8F0C-FBCFE949BBE2}.Debug|x86.ActiveCfg = Debug|x86
+		{D888A327-95D1-4197-8F0C-FBCFE949BBE2}.Debug|x86.Build.0 = Debug|x86
+		{D888A327-95D1-4197-8F0C-FBCFE949BBE2}.Release|x86.ActiveCfg = Release|x86
+		{D888A327-95D1-4197-8F0C-FBCFE949BBE2}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
