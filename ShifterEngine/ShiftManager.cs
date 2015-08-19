@@ -114,11 +114,15 @@ namespace ShifterEngine {
 		/// <param name="start">Start.</param>
 		/// <param name="end">End.</param>
 		public Money GetSalaryBetweenDates(DateTime start, DateTime end) {
-			var shiftsToCollectFrom = this.GetShiftsBetweenDates(start, end);
+			throw new NotImplementedException();
+		}
 
-			var totalSalary = this.Profile.CalcSalaryOf(shiftsToCollectFrom);
+		#endregion
 
-			return totalSalary;
+		#region Static methods
+
+		public static Money CalcSalaryOf(IEnumerable<Shift> shifts, Profile profile) {
+			throw new NotImplementedException();
 		}
 
 		#endregion

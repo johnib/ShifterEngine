@@ -8,7 +8,7 @@ namespace ShifterEngine {
 	/// This class represents a normal Shift consisting of starting and ending times.
 	/// The class offers some simple but commonly used data about the shift.
 	/// </summary>
-	[Serializable()]
+	[Serializable]
 	public class Shift : IComparable, ISerializable, ICloneable {
 
 		#region Properties
@@ -107,7 +107,10 @@ namespace ShifterEngine {
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
 			info.AddValue("start", this.Start);
 			info.AddValue("end", this.End);
+
+			// TODO: fix serializing this.Duration (it's an empty string in the XML)
 			info.AddValue("duration", this.Duration.ToString());
+
 			info.AddValue("hours", this.Hours);
 			info.AddValue("minutes", this.Minutes);
 		}
